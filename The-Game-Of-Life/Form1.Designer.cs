@@ -28,13 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.New_game = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // New_game
+            // 
+            this.New_game.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.New_game.Location = new System.Drawing.Point(12, 12);
+            this.New_game.Name = "New_game";
+            this.New_game.Size = new System.Drawing.Size(135, 35);
+            this.New_game.TabIndex = 0;
+            this.New_game.Text = "New game";
+            this.New_game.UseVisualStyleBackColor = true;
+            this.New_game.Click += new System.EventHandler(this.New_game_Click);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(1066, 821);
+            this.Controls.Add(this.New_game);
+            this.Name = "Form1";
+            this.Text = "The Game of Life";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button New_game;
     }
 }
 
