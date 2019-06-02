@@ -48,7 +48,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(312, 24);
             this.label1.TabIndex = 0;
-            this.label1.Text = "How big should be the playing grid?";
+            this.label1.Text = "How big should the playing grid be?";
             // 
             // label2
             // 
