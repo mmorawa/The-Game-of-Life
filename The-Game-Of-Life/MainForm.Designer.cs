@@ -1,6 +1,6 @@
 ﻿namespace The_Game_Of_Life
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -42,14 +42,14 @@
             this.New_game.UseVisualStyleBackColor = true;
             this.New_game.Click += new System.EventHandler(this.New_game_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1066, 821);
             this.Controls.Add(this.New_game);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "The Game of Life";
             this.ResumeLayout(false);
 

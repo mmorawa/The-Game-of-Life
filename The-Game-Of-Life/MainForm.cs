@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace The_Game_Of_Life
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private Panel GameBoard;
         private int Counter = 0;
@@ -17,7 +17,7 @@ namespace The_Game_Of_Life
         private Font Standard = new Font("Arial", 16, FontStyle.Bold);
         private List<int> RandomNumbers;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -25,7 +25,7 @@ namespace The_Game_Of_Life
 
         private void New_game_Click(object sender, EventArgs e)
         {
-            using (Form2 form2 = new Form2())
+            using (InputForm form2 = new InputForm())
             {
                 DialogResult dr = form2.ShowDialog();
 
@@ -59,18 +59,18 @@ namespace The_Game_Of_Life
             {
                 Location = new Point(15, 55),
                 BackColor = Color.White,
-                Size = new Size(Form2.Length * 50, Form2.Length * 50),
+                Size = new Size(InputForm.Length * 50, InputForm.Length * 50),
                 BorderStyle = BorderStyle.FixedSingle,
                 Name = "Board"
             };
             Controls.Add(GameBoard);
 
-            Cells = new PictureBox[Form2.Length, Form2.Length];
-            MatrixOfCells = new int[Form2.Length, Form2.Length];
+            Cells = new PictureBox[InputForm.Length, InputForm.Length];
+            MatrixOfCells = new int[InputForm.Length, InputForm.Length];
 
 
-            int NumberOfCells = Form2.Length * Form2.Length;
-            int NumberOfRandomCells = (Form2.Percentage * NumberOfCells) / 100;
+            int NumberOfCells = InputForm.Length * InputForm.Length;
+            int NumberOfRandomCells = (InputForm.Percentage * NumberOfCells) / 100;
 
             RandomNumbers = new List<int>();
 
@@ -88,9 +88,9 @@ namespace The_Game_Of_Life
             }
 
             int m = 1;
-            for (int i = 0; i < Form2.Length; i++)
+            for (int i = 0; i < InputForm.Length; i++)
             {
-                for (int j = 0; j < Form2.Length; j++)
+                for (int j = 0; j < InputForm.Length; j++)
                 {
                     if (RandomNumbers.Contains(m))
                     {
@@ -104,9 +104,9 @@ namespace The_Game_Of_Life
                 }
             }
 
-            for (int i = 0; i < Form2.Length; i++)
+            for (int i = 0; i < InputForm.Length; i++)
             {
-                for (int j = 0; j < Form2.Length; j++)
+                for (int j = 0; j < InputForm.Length; j++)
                 {
                     Cells[i, j] = new PictureBox
                     {
@@ -121,9 +121,9 @@ namespace The_Game_Of_Life
                 }
             }
 
-            for (int i = 0; i < Form2.Length; i++)
+            for (int i = 0; i < InputForm.Length; i++)
             {
-                for (int j = 0; j < Form2.Length; j++)
+                for (int j = 0; j < InputForm.Length; j++)
                 {
                     Cells[i, j].Visible = Convert.ToBoolean(MatrixOfCells[i, j]);
 
@@ -152,7 +152,7 @@ namespace The_Game_Of_Life
             CycleNumber.Text = "Cycle no. " + Counter + ".";
             OneCycle();
 
-            if (Counter >= Form2.Cycle)
+            if (Counter >= InputForm.Cycle)
             {
                 MainTimer.Stop();
                 CycleNumber.Text += " The End.";
@@ -163,13 +163,13 @@ namespace The_Game_Of_Life
 
         private void OneCycle()
         {
-            int[,] MatrixOfCellsTemp = new int[Form2.Length, Form2.Length];
+            int[,] MatrixOfCellsTemp = new int[InputForm.Length, InputForm.Length];
             int AliveNeighbours = 0;
 
 
-            for (int i = 0; i < Form2.Length; i++)
+            for (int i = 0; i < InputForm.Length; i++)
             {
-                for (int j = 0; j < Form2.Length; j++)
+                for (int j = 0; j < InputForm.Length; j++)
                 {
                     AliveNeighbours = 0;
 
@@ -192,18 +192,18 @@ namespace The_Game_Of_Life
             }
 
 
-            for (int i = 0; i < Form2.Length; i++)
+            for (int i = 0; i < InputForm.Length; i++)
             {
-                for (int j = 0; j < Form2.Length; j++)
+                for (int j = 0; j < InputForm.Length; j++)
                 {
                     MatrixOfCells[i, j] = MatrixOfCellsTemp[i, j];
 
                 }
             }
 
-            for (int i = 0; i < Form2.Length; i++)
+            for (int i = 0; i < InputForm.Length; i++)
             {
-                for (int j = 0; j < Form2.Length; j++)
+                for (int j = 0; j < InputForm.Length; j++)
                 {
                     Cells[i, j].Visible = Convert.ToBoolean(MatrixOfCells[i, j]);
 
@@ -225,7 +225,7 @@ namespace The_Game_Of_Life
                 {
                     if (!(Row == i && Column == j))
                     {
-                        if (i >= 0 && i < Form2.Length && j >= 0 && j < Form2.Length)
+                        if (i >= 0 && i < InputForm.Length && j >= 0 && j < InputForm.Length)
                         {
                             if (MatrixOfCells[i, j] == 1)
                             {

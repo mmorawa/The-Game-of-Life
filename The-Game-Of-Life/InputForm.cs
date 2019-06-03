@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace The_Game_Of_Life
 {
-    public partial class Form2 : Form
+    public partial class InputForm : Form
     {
-        public Form2()
+        public InputForm()
         {
             InitializeComponent();
             BoardLength.SelectedText = "0";

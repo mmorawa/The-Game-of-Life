@@ -1,6 +1,6 @@
 ﻿namespace The_Game_Of_Life
 {
-    partial class Form2
+    partial class InputForm
     {
         /// <summary>
         /// Required designer variable.
@@ -136,7 +136,7 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "units";
             // 
-            // Form2
+            // InputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -151,7 +151,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form2";
+            this.Name = "InputForm";
             this.Text = "New game";
             this.ResumeLayout(false);
             this.PerformLayout();
