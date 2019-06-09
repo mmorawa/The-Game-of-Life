@@ -132,7 +132,7 @@ namespace The_Game_Of_Life
 
             CycleNumber = new Label
             {
-                Location = new Point(150, 17),
+                Location = new Point(300, 17),
                 Size = new Size(250, 25),
                 Visible = true,
                 Font = Standard,
@@ -240,8 +240,28 @@ namespace The_Game_Of_Life
         }
 
 
+        private void Reset_Click(object sender, EventArgs e)
+        {
+            if (GameBoard != null)
+            {
+                GameBoard.Dispose();
+                CycleNumber.Dispose();
+                RandomNumbers.Clear();
+            }
+            else
+            {
+                MessageBox.Show("There is nothing to reset.");
+                return;
+            }
 
+            Board();
 
+            MainTimer = new Timer();
+            MainTimer.Interval = 1000;
+            MainTimer.Tick += new EventHandler(Timer_Tick);
 
+            Counter = 0;
+            MainTimer.Start();
+        }
     }
 }
