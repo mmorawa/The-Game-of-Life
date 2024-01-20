@@ -17,43 +17,49 @@ namespace The_Game_Of_Life
         public static int Percentage { get; set; }
         public static int Cycle { get; set; }
 
-
         private void Button_OK_Click(object sender, EventArgs e)
         {
             try
             {
-                if (BoardLength.Text == "" || StartPercentage.Text == "" || NumberOfCycles.Text == "")
-                {
-                    MessageBox.Show("You must provide a value for all fields.");
-                    return;
-                }
-                else if (int.Parse(BoardLength.Text) <= 0 || int.Parse(StartPercentage.Text) <= 0 || int.Parse(NumberOfCycles.Text) <= 0)
-                {
-                    MessageBox.Show("Each value must be above 0.");
-                    return;
-                }
-                else if (int.Parse(StartPercentage.Text) >= 100)
-                {
-                    MessageBox.Show("You cannot exceed 100%.");
-                    return;
-                }
-                else
-                {
-                    Length = int.Parse(BoardLength.Text);
-                    Percentage = int.Parse(StartPercentage.Text);
-                    Cycle = int.Parse(NumberOfCycles.Text);
+                bool startPercentageErrorParse = int.TryParse(StartPercentage.Text, out int parsedStartPercentage);
+                bool boardLengthErrorParse = int.TryParse(BoardLength.Text, out int parsedBoardLength);
+                bool numberOfCyclesErrorParse = int.TryParse(NumberOfCycles.Text, out int parsedNumberOfCycles);
 
-                    DialogResult = DialogResult.OK;
+                if (!startPercentageErrorParse || !boardLengthErrorParse || !numberOfCyclesErrorParse)
+                {
+                    MessageBox.Show("All fields must be integers");
+                    return;
                 }
+
+                if (parsedStartPercentage <= 0 || parsedStartPercentage > 100)
+                {
+                    MessageBox.Show("Percentage must be between 0 and 100");
+                    return;
+                }
+
+                if (parsedBoardLength <= 0 || parsedBoardLength > 10)
+                {
+                    MessageBox.Show("Length must be between 0 and 10");
+                    return;
+                }
+
+                if (parsedNumberOfCycles <= 0 || parsedNumberOfCycles > 100)
+                {
+                    MessageBox.Show("Number of cycles must be between 0 and 100");
+                    return;
+                }
+
+                Length = parsedBoardLength;
+                Percentage = parsedStartPercentage;
+                Cycle = parsedNumberOfCycles;
+
+                DialogResult = DialogResult.OK;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Input data is in wrong format.");
+                MessageBox.Show(ex.Message);
                 return;
             }
-
-
         }
-
     }
 }

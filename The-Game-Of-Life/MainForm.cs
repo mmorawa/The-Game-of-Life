@@ -9,7 +9,7 @@ namespace The_Game_Of_Life
     {
         private Panel GameBoard;
         private int Counter = 0;
-        private Random rnd = new Random();
+        private readonly Random rnd = new Random();
         private Timer MainTimer;
         private PictureBox[,] Cells;
         private int[,] MatrixOfCells;
@@ -22,14 +22,11 @@ namespace The_Game_Of_Life
             InitializeComponent();
         }
 
-
         private void New_game_Click(object sender, EventArgs e)
         {
             using (InputForm form2 = new InputForm())
             {
                 DialogResult dr = form2.ShowDialog();
-
-
 
                 if (dr == DialogResult.OK)
                 {
@@ -44,11 +41,10 @@ namespace The_Game_Of_Life
 
                     MainTimer = new Timer();
                     MainTimer.Interval = 1000;
-                    MainTimer.Tick += new EventHandler(Timer_Tick);
+                    MainTimer.Tick += Timer_Tick;
 
                     Counter = 0;
                     MainTimer.Start();
-
                 }
             }
         }
@@ -68,23 +64,19 @@ namespace The_Game_Of_Life
             Cells = new PictureBox[InputForm.Length, InputForm.Length];
             MatrixOfCells = new int[InputForm.Length, InputForm.Length];
 
-
-            int NumberOfCells = InputForm.Length * InputForm.Length;
-            int NumberOfRandomCells = (InputForm.Percentage * NumberOfCells) / 100;
+            int numberOfCells = InputForm.Length * InputForm.Length;
+            int numberOfRandomCells = (InputForm.Percentage * numberOfCells) / 100;
 
             RandomNumbers = new List<int>();
 
-            int Temp = 0;
-            while (NumberOfRandomCells > 0)
+            while (numberOfRandomCells > 0)
             {
-                Temp = rnd.Next(0, NumberOfCells + 1);
-                if (!RandomNumbers.Contains(Temp))
+                int temp = rnd.Next(0, numberOfCells + 1);
+                if (!RandomNumbers.Contains(temp))
                 {
-                    RandomNumbers.Add(Temp);
-                    NumberOfRandomCells--;
-
+                    RandomNumbers.Add(temp);
+                    numberOfRandomCells--;
                 }
-
             }
 
             int m = 1;
@@ -92,14 +84,7 @@ namespace The_Game_Of_Life
             {
                 for (int j = 0; j < InputForm.Length; j++)
                 {
-                    if (RandomNumbers.Contains(m))
-                    {
-                        MatrixOfCells[i, j] = 1;
-                    }
-                    else
-                    {
-                        MatrixOfCells[i, j] = 0;
-                    }
+                    MatrixOfCells[i, j] = RandomNumbers.Contains(m) ? 1 : 0;
                     m++;
                 }
             }
@@ -113,9 +98,9 @@ namespace The_Game_Of_Life
                         Location = new Point(j * 50, i * 50),
                         BackColor = Color.Black,
                         Size = new Size(50, 50),
-                        Visible = true
+                        Visible = true,
+                        Name = $"Board {i}, {j}"
                     };
-                    Cells[i, j].Name = string.Format("Board {0}, {1}", i, j);
 
                     GameBoard.Controls.Add(Cells[i, j]);
                 }
@@ -126,7 +111,6 @@ namespace The_Game_Of_Life
                 for (int j = 0; j < InputForm.Length; j++)
                 {
                     Cells[i, j].Visible = Convert.ToBoolean(MatrixOfCells[i, j]);
-
                 }
             }
 
@@ -140,16 +124,14 @@ namespace The_Game_Of_Life
             };
             Controls.Add(CycleNumber);
 
-
             GameBoard.Invalidate();
-
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             Counter++;
 
-            CycleNumber.Text = "Cycle no. " + Counter + ".";
+            CycleNumber.Text = $"Cycle no. {Counter}.";
             OneCycle();
 
             if (Counter >= InputForm.Cycle)
@@ -158,46 +140,37 @@ namespace The_Game_Of_Life
                 CycleNumber.Text += " The End.";
                 return;
             }
-
         }
 
         private void OneCycle()
         {
-            int[,] MatrixOfCellsTemp = new int[InputForm.Length, InputForm.Length];
-            int AliveNeighbours = 0;
-
-
+            int[,] matrixOfCellsTemp = new int[InputForm.Length, InputForm.Length];
             for (int i = 0; i < InputForm.Length; i++)
             {
                 for (int j = 0; j < InputForm.Length; j++)
                 {
-                    AliveNeighbours = 0;
+                    int aliveNeighbours = Compute(i, j);
 
-                    AliveNeighbours = Compute(i, j);
-
-                    if (MatrixOfCells[i, j] == 0 && AliveNeighbours == 3)
+                    if (MatrixOfCells[i, j] == 0 && aliveNeighbours == 3)
                     {
-                        MatrixOfCellsTemp[i, j] = 1;
+                        matrixOfCellsTemp[i, j] = 1;
                     }
-                    else if (MatrixOfCells[i, j] == 1 && (AliveNeighbours == 2 || AliveNeighbours == 3))
+                    else if (MatrixOfCells[i, j] == 1 && (aliveNeighbours == 2 || aliveNeighbours == 3))
                     {
-                        MatrixOfCellsTemp[i, j] = 1;
+                        matrixOfCellsTemp[i, j] = 1;
                     }
                     else
                     {
-                        MatrixOfCellsTemp[i, j] = 0;
+                        matrixOfCellsTemp[i, j] = 0;
                     }
-
                 }
             }
-
 
             for (int i = 0; i < InputForm.Length; i++)
             {
                 for (int j = 0; j < InputForm.Length; j++)
                 {
-                    MatrixOfCells[i, j] = MatrixOfCellsTemp[i, j];
-
+                    MatrixOfCells[i, j] = matrixOfCellsTemp[i, j];
                 }
             }
 
@@ -206,39 +179,31 @@ namespace The_Game_Of_Life
                 for (int j = 0; j < InputForm.Length; j++)
                 {
                     Cells[i, j].Visible = Convert.ToBoolean(MatrixOfCells[i, j]);
-
                 }
             }
 
             GameBoard.Invalidate();
-
-
         }
-
 
         private int Compute(int Row, int Column)
         {
-            int Alive = 0;
+            int alive = 0;
             for (int i = Row - 1; i <= Row + 1; i++)
             {
                 for (int j = Column - 1; j <= Column + 1; j++)
                 {
-                    if (!(Row == i && Column == j))
+                    if (!(Row == i && Column == j) && i >= 0 && i < InputForm.Length && j >= 0 && j < InputForm.Length)
                     {
-                        if (i >= 0 && i < InputForm.Length && j >= 0 && j < InputForm.Length)
+                        if (MatrixOfCells[i, j] == 1)
                         {
-                            if (MatrixOfCells[i, j] == 1)
-                            {
-                                Alive++;
-                            }
+                            alive++;
                         }
                     }
                 }
             }
 
-            return Alive;
+            return alive;
         }
-
 
         private void Reset_Click(object sender, EventArgs e)
         {
@@ -256,12 +221,9 @@ namespace The_Game_Of_Life
 
             Board();
 
-            MainTimer = new Timer();
-            MainTimer.Interval = 1000;
-            MainTimer.Tick += new EventHandler(Timer_Tick);
-
-            Counter = 0;
+            MainTimer.Stop();
             MainTimer.Start();
+            Counter = 0;
         }
     }
 }
