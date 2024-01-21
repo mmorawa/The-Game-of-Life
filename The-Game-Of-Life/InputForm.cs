@@ -7,23 +7,25 @@ namespace The_Game_Of_Life
     {
         public InputForm()
         {
-            InitializeComponent();
-            BoardLength.SelectedText = "0";
-            StartPercentage.SelectedText = "0";
-            NumberOfCycles.SelectedText = "0";
+            this.InitializeComponent();
+            this.BoardLength.SelectedText = "0";
+            this.StartPercentage.SelectedText = "0";
+            this.NumberOfCycles.SelectedText = "0";
         }
 
         public static int Length { get; set; }
+
         public static int Percentage { get; set; }
+
         public static int Cycle { get; set; }
 
         private void Button_OK_Click(object sender, EventArgs e)
         {
             try
             {
-                bool startPercentageErrorParse = int.TryParse(StartPercentage.Text, out int parsedStartPercentage);
-                bool boardLengthErrorParse = int.TryParse(BoardLength.Text, out int parsedBoardLength);
-                bool numberOfCyclesErrorParse = int.TryParse(NumberOfCycles.Text, out int parsedNumberOfCycles);
+                bool startPercentageErrorParse = int.TryParse(this.StartPercentage.Text, out int parsedStartPercentage);
+                bool boardLengthErrorParse = int.TryParse(this.BoardLength.Text, out int parsedBoardLength);
+                bool numberOfCyclesErrorParse = int.TryParse(this.NumberOfCycles.Text, out int parsedNumberOfCycles);
 
                 if (!startPercentageErrorParse || !boardLengthErrorParse || !numberOfCyclesErrorParse)
                 {
@@ -53,7 +55,7 @@ namespace The_Game_Of_Life
                 Percentage = parsedStartPercentage;
                 Cycle = parsedNumberOfCycles;
 
-                DialogResult = DialogResult.OK;
+                this.DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
